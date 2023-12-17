@@ -1,106 +1,24 @@
 package com.linlif.leecode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
+/**
+ * Copyright (c) 2020 Tencent. All rights reserved.
+ * 类功能描述:
+ * 918. 环形子数组的最大和
+ * @author lifenglin
+ * @date 2023/10/6
+ */
 public class code918 {
 
-    class TimeMap {
-
-        HashMap<String, TreeMap<Integer, String>> map;
-        public TimeMap() {
-            map = new HashMap();
+    public int maxSubarraySumCircular(int[] nums) {
+        int total = 0, maxSum = nums[0], curMax = 0, minSum = nums[0], curMin = 0;
+        for (int a : nums) {
+            curMax = Math.max(curMax + a, a);
+            maxSum = Math.max(maxSum, curMax);
+            curMin = Math.min(curMin + a, a);
+            minSum = Math.min(minSum, curMin);
+            total += a;
         }
-
-        public void set(String key, String value, int timestamp) {
-            map.computeIfAbsent(key, k-> new TreeMap()).put(timestamp, value);
-        }
-
-        public String get(String key, int timestamp) {
-            if(!map.containsKey(key)) {
-                return "";
-            }
-            Integer time = map.get(key).floorKey(timestamp);
-            if(time == null) {
-                return "";
-            }
-            return map.get(key).get(time);
-        }
-    }
-
-    class TimeMap2 {
-        class Pair implements Comparable<Pair> {
-            int timestamp;
-            String value;
-
-            public Pair(int timestamp, String value) {
-                this.timestamp = timestamp;
-                this.value = value;
-            }
-
-            public int hashCode() {
-                return timestamp + value.hashCode();
-            }
-
-            public boolean equals(Object obj) {
-                if (obj instanceof Pair) {
-                    Pair pair2 = (Pair) obj;
-                    return this.timestamp == pair2.timestamp && this.value.equals(pair2.value);
-                }
-                return false;
-            }
-
-            public int compareTo(Pair pair2) {
-                if (this.timestamp != pair2.timestamp) {
-                    return this.timestamp - pair2.timestamp;
-                } else {
-                    return this.value.compareTo(pair2.value);
-                }
-            }
-        }
-
-        Map<String, List<Pair>> map;
-
-        public TimeMap2() {
-            map = new HashMap<String, List<Pair>>();
-        }
-
-        public void set(String key, String value, int timestamp) {
-            List<Pair> pairs = map.getOrDefault(key, new ArrayList<Pair>());
-            pairs.add(new Pair(timestamp, value));
-            map.put(key, pairs);
-        }
-
-        public String get(String key, int timestamp) {
-            List<Pair> pairs = map.getOrDefault(key, new ArrayList<Pair>());
-            // 使用一个大于所有 value 的字符串，以确保在 pairs 中含有 timestamp 的情况下也返回大于 timestamp 的位置
-            Pair pair = new Pair(timestamp, String.valueOf((char) 127));
-            int i = binarySearch(pairs, pair);
-            if (i > 0) {
-                return pairs.get(i - 1).value;
-            }
-            return "";
-        }
-
-        private int binarySearch(List<Pair> pairs, Pair target) {
-            int low = 0, high = pairs.size() - 1;
-            if (high < 0 || pairs.get(high).compareTo(target) <= 0) {
-                return high + 1;
-            }
-            while (low < high) {
-                int mid = (high - low) / 2 + low;
-                Pair pair = pairs.get(mid);
-                if (pair.compareTo(target) <= 0) {
-                    low = mid + 1;
-                } else {
-                    high = mid;
-                }
-            }
-            return low;
-        }
+        return maxSum > 0 ? Math.max(maxSum, total - minSum) : maxSum;
     }
 
 }

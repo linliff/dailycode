@@ -1,42 +1,30 @@
 package com.linlif.leecode;
 
 /**
- * 121 买股票最佳时机
+ * Copyright (c) 2020 Tencent. All rights reserved.
+ * 类功能描述:
+ *
+ * @author lifenglin
+ * @date 2023/10/19
  */
-class code121 {
-
-    public int maxProfit(int[] prices) {
-        int minprice = Integer.MAX_VALUE;
-        int maxprofit = 0;
-        for (int i = 0; i < prices.length; i++) {
-            if (prices[i] < minprice)
-                minprice = prices[i];
-            else if (prices[i] - minprice > maxprofit)
-                maxprofit = prices[i] - minprice;
-        }
-        return maxprofit;
-    }
+public class code121 {
 
 
-    public int maxProfit2(int[] prices) {
-        if (prices == null || prices.length <= 1) {
+    private int maxProfit(int[] prices) {
+        if (prices == null || prices.length == 0) {
             return 0;
         }
-//        int result = 0;
-//        int min = prices[0];
-//        for (int value : prices) {
-//            result = Math.max(result, value - min);
-//            min = Math.min(min, value);
-//        }
-//        return Math.max(result, 0);
 
-        int max = 0;
-        int[] results = new int[prices.length];
-        results[0] = prices[0];
+        int result = 0;
+        int min = prices[0];
         for (int i = 1; i < prices.length; i++) {
-            results[i] = Math.min(results[i - 1], prices[i]);
-            max = Math.max(max, prices[i] - results[i]);
+            if (prices[i] > min) {
+                result = Math.max(result, prices[i] - min);
+            } else if (prices[i] < min) {
+                min = prices[i];
+            }
         }
-        return max;
+        return result;
     }
+
 }
