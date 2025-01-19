@@ -19,22 +19,27 @@ public class code144 {
 
     public static void main(String[] args) {
 
-        TreeNode treeNode1 = new TreeNode(1);
-        TreeNode treeNode2 = new TreeNode(2);
-        TreeNode treeNode3 = new TreeNode(3);
-        TreeNode treeNode4 = new TreeNode(4);
-        TreeNode treeNode5 = new TreeNode(5);
-        TreeNode treeNode6 = new TreeNode(6);
-        treeNode1.left = treeNode2;
-        treeNode1.right = treeNode3;
+        try {
+            TreeNode treeNode1 = null;
+            TreeNode treeNode2 = new TreeNode(2);
+            TreeNode treeNode3 = new TreeNode(3);
+            TreeNode treeNode4 = new TreeNode(4);
+            TreeNode treeNode5 = new TreeNode(5);
+            TreeNode treeNode6 = new TreeNode(6);
+            treeNode1.left = treeNode2;
+            treeNode1.right = treeNode3;
 
-        treeNode2.left = treeNode4;
-        treeNode2.right = treeNode5;
+            treeNode2.left = treeNode4;
+            treeNode2.right = treeNode5;
 
-        treeNode5.left = treeNode6;
+            treeNode5.left = treeNode6;
 
-        System.out.println("hello");
-        testttt();
+            System.out.println("hello");
+            testttt();
+        }catch (aa e){
+            System.out.println("aa" + e);
+        }
+
     }
 
     public static List<Integer> inorderTraversal1(TreeNode root) {
@@ -78,6 +83,10 @@ public class code144 {
         }
 
         System.out.println("end");
+
+    }
+
+    public class aa extends NullPointerException{
 
     }
 }
